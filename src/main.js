@@ -6,7 +6,7 @@ import './FlowElement'
 
 
 function Counter(title) {
-    const value = span(null, '0');
+    const value = span('0');
     return div({
         w: '400px', h: '200px',
         bg: '#ccc', m: '2rem auto',
@@ -15,9 +15,9 @@ function Counter(title) {
     })
     .add(
         h1({fs:'1.2rem'}, '计数器'+title),
-        (title===1)&&p(null,"第一个计数器"),
-        p(null, "计数器的值是:").add(value),
-        button({p:'0.5rem 2rem'}, '加1').on('click', () => {
+        p(title===1,"第一个计数器"),
+        p("计数器的值是:",value),
+        button({p:'0.5rem 2rem'},'加1').on('click', () => {
             value.t++;
         })
     );

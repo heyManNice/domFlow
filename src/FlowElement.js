@@ -1,18 +1,17 @@
-class LazyElement {
-    on(){
-        console.log('test');
-    }
-}
-window.LazyElement = LazyElement;
 
 class E {
-    constructor(tagName, style, text) {
+    constructor(tagName, ...args) {
         const element = document.createElement(tagName);
-        if (style) {
-            element.s = style;
-        }
-        if (text) {
-            element.t = text;
+        for (const arg of args) {
+            if (typeof arg === 'string') {
+                element.t = arg;
+            } else if (arg instanceof HTMLElement){
+                element.add(arg);
+            } else if (typeof arg === 'object') {
+                element.s=arg;
+            } else if (typeof arg === 'function') {
+                arg(element);
+            }
         }
         return element;
     }
@@ -50,8 +49,11 @@ const comTag = [
 ]
 comTag.forEach(tagName => {
     if (!window[tagName]) {
-        window[tagName] = function(style, text) {
-            return new E(tagName, style, text);
+        window[tagName] = function(...args) {
+            if (typeof args[0] === 'boolean' && !args[0]) {
+                return null;
+            }
+            return new E(tagName, ...args);
         };
     }else{
         console.warn(`window.${tagName}已存在`);
