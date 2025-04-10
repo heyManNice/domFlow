@@ -1,0 +1,9 @@
+{
+  "devDependencies": {
+    "esbuild": "^0.25.2"
+  },
+  "scripts": {
+    "build": "esbuild --bundle --minify --outfile=dist/domFlow.js ./src/main.js",
+    "dev": "esbuild --bundle --sourcemap --outfile=dev/domFlow.js ./src/main.js --watch"
+  }
+}
