@@ -46,4 +46,24 @@ HEP.on = function(eventName, callback) {
 }
 HEP.x = function(){
     this.remove();
+    return null;
+}
+HEP.hide = function(duration = 300){
+    if (duration > 0) {
+        const oldtransition = this.style.transition;
+        this.style.transition = `opacity ${duration}ms`;
+        this.style.opacity = 0;
+        setTimeout(() => {
+            this.style.display = 'none';
+            this.style.transition = oldtransition;
+        }, duration);
+        return this;
+    }
+    this.originalDisplay = this.style.display;
+    this.style.display = 'none';
+    return this;
+}
+HEP.show = function(){
+    this.style.display = this.originalDisplay || 'block';
+    return this; 
 }
